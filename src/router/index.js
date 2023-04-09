@@ -1,6 +1,7 @@
 import Login from "../components/Login.vue"
 import Register from "../components/Register.vue"
 import ForgotPassword from "../components/ForgotPassword.vue"
+import index from "../components/index.vue"
 import { createRouter, createWebHashHistory } from 'vue-router';
 
 
@@ -21,6 +22,10 @@ const routes = [
         path: "/forgot-password",
         component: ForgotPassword
     },
+    {
+        path: "/index",
+        component:index
+    }
 
 ]
 
