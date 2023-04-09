@@ -9,7 +9,9 @@
         <password-input v-model="loginForm.password"></password-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')">登录</el-button>
+        <el-button type="primary" @click="submitForm('loginForm')"
+          >登录</el-button
+        >
       </el-form-item>
       <div class="extra-links">
         <router-link to="/register">注册账号</router-link>
@@ -20,33 +22,33 @@
 </template>
 
 <script>
-import PasswordInput from '@/components/PasswordInput.vue';
+import PasswordInput from "@/components/PasswordInput.vue";
 
 export default {
   components: {
-    PasswordInput
+    PasswordInput,
   },
   data() {
     return {
       loginForm: {
-        email: '',
-        password: ''
-      }
+        email: "",
+        password: "",
+      },
     };
   },
   methods: {
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
-          console.log('登录成功！');
+          console.log("登录成功！");
           // 这里添加实际的登录逻辑
         } else {
-          console.log('登录失败！');
+          console.log("登录失败！");
           return false;
         }
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -68,6 +70,5 @@ h2 {
   display: flex;
   justify-content: space-between;
 }
-
-
 </style>
+

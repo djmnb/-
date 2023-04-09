@@ -6,26 +6,56 @@
 
 ## 环境搭建
 
-### 饿了么ui
+### 前端
+
+#### 饿了么ui
 
 ``` 
 npm install element-plus --save
 npm install @element-plus/icons-vue
 ```
 
-### vue-router
+#### vue-router
 ```
 npm install vue-router@4
 ```
 
-### vuex
+#### vuex
 ```
 npm install vuex@next
+```
+#### axios
+```
+npm install axios
+```
+#### 前端解决跨域问题
+```
+npm install http-proxy-middleware --save
+```
+
+### 后端
+
+#### 邮箱
+```
+ pip install django-smtp-ssl
+```
+
+#### 验证码转图片
+
+```
+pip install captcha
+```
+
+#### 后端解决跨域问题
+```
+pip install django-cors-headers
 ```
 
 
 
 ## 前端
+
+### 登录页面
 
 我现在需要你用 vue3 + 饿了么ui  帮我写一个前端登录界面,一定要使用vue3而且要摒弃vue2中的一些被遗弃了的东西,我已经安装好所有的环境了,你只需要告诉我代码就行
 
@@ -38,3 +68,18 @@ npm install vuex@next
 忘记密码组件中  它和祖册组件差不多 这两个组件也可以共用一下, 只不过一些关键信息不一样,比如标题,或者按钮文字
 
 你现在按照这个步骤一步一步告诉我,每完成一个组件就停下来,我需要看你写的怎么样
+
+### 搜索页面
+
+## 后端
+
+你现在是一个高级Django框架开发工程师
+我的Django环境已经全部搭建好了,项目名字叫做searchproject,应用名字是app
+我们前面已经完成了前端登录页面,不要忘记哦,我们的前端是用vue3写的,是一个前后端分离项目,接下来我们将一步一步的完成后端的登录逻辑,接下来我将一步步告诉你需要做什么,你先不用写代码,接下来我会像你提要求
+
+我们先简单地设计一个用户模型让他能够注册跟登录,后续再对它的功能增强,它包含用户邮箱(要求唯一),密码,不要使用Django自带的用户模型
+
+还需要一个能够发送邮箱验证码的功能
+
+现在我需要三个接口,一个对应前面创建的用户模型的登录,一个对应密码修改,一个对应注册
+
