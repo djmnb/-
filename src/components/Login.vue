@@ -52,7 +52,7 @@ let userinfo = reactive({
 });
 </script>
   
-  <style scoped>
+<style scoped>
 .container {
   width: 500px;
   height: 400px;
