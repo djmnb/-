@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <el-input
-      v-model="password"
-      :type="passwordType"
-      placeholder="请输入密码"
-    >
-      <template #append>
-        <el-icon
-          :class="iconClass"
-          :name="showPassword ? 'el-icon-eye-off' : 'el-icon-eye'"
-          @click="togglePasswordVisibility"
-        ></el-icon>
-      </template>
-    </el-input>
-  </div>
+  <el-input
+    v-model="password"
+    :type="passwordType"
+    placeholder="请输入密码"
+  >
+    <template #suffix>
+      <span
+        @click.stop="passwordVisible = !passwordVisible"
+        class="passwordVisible"
+        ><el-icon v-show="!passwordVisible"><View /></el-icon>
+        <el-icon v-show="passwordVisible"><Hide /></el-icon
+      ></span>
+    </template>
+  </el-input>
 </template>
 
 <script>
@@ -21,27 +20,22 @@ export default {
   data() {
     return {
       password: "",
-      showPassword: false,
+      passwordVisible: false,
     };
   },
   computed: {
     passwordType() {
-      return this.showPassword ? "text" : "password";
-    },
-    iconClass() {
-      return this.showPassword ? "el-icon-eye-off" : "el-icon-eye";
+      return this.passwordVisible ? "text" : "password";
     },
   },
-  methods: {
-    togglePasswordVisibility() {
-      this.showPassword = !this.showPassword;
-    },
+  watch: {
+    password(newval, oldval) {
+      this.$emit('update:modelValue',newval)
+    }
   },
+  methods: {},
 };
 </script>
 
 <style scoped>
-.el-icon {
-  cursor: pointer;
-}
 </style>
