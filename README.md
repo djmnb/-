@@ -1,8 +1,8 @@
 
 ## git注意事项
 
-src除了main.js外其他文件属于每个分支单独控制
-其他东西都属于配置分支
+只有src下 APP.vue和componets属于每个分支单独控制
+其他东西都属于配置分支,如果要修改其他东西,必须回到配置分支来修改
 
 ## 环境搭建
 
@@ -10,12 +10,20 @@ src除了main.js外其他文件属于每个分支单独控制
 
 ``` 
 npm install element-plus --save
+npm install @element-plus/icons-vue
 ```
+
 ### vue-router
 ```
 npm install vue-router@4
 ```
-### vue-
+
+### vuex
+```
+npm install vuex@next
+```
+
+
 
 ## 前端
 
