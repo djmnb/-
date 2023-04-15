@@ -7,13 +7,14 @@
     <template #suffix>
       <span
         @click.stop="passwordVisible = !passwordVisible"
-        class="passwordVisible"
+        class="no-select"
         ><el-icon v-show="!passwordVisible"><View /></el-icon>
         <el-icon v-show="passwordVisible"><Hide /></el-icon
       ></span>
     </template>
   </el-input>
 </template>
+
 
 <script>
 export default {

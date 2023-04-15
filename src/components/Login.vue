@@ -1,15 +1,15 @@
 <template>
   <div class="login-container">
     <h2>登录</h2>
-    <el-form ref="loginForm" :model="loginForm" label-width="100px">
+    <el-form ref="Form" :model="loginForm" label-width="100px">
       <el-form-item label="邮箱" prop="email">
-        <el-input v-model="loginForm.email" placeholder="请输入邮箱"></el-input>
+        <el-input v-model="loginForm.email" placeholder="请输入邮箱" type="email"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <password-input v-model="loginForm.password"></password-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('loginForm')"
+        <el-button type="primary" @click="submitForm"
           >登录</el-button
         >
       </el-form-item>
@@ -21,35 +21,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PasswordInput from "@/components/PasswordInput.vue";
+import { reactive, ref, getCurrentInstance } from "vue";
+import axios from "axios";
 
-export default {
-  components: {
-    PasswordInput,
-  },
-  data() {
-    return {
-      loginForm: {
-        email: "",
-        password: "",
-      },
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          console.log("登录成功！");
-          // 这里添加实际的登录逻辑
-        } else {
-          console.log("登录失败！");
-          return false;
-        }
-      });
-    },
-  },
-};
+
+let loginForm = reactive({
+  email: "",
+  password: "",
+})
+
+// 拿到组件实例对象
+const Form = ref(null)
+
+// 提交表单
+const submitForm = () => {
+  // 验证数据是否合格
+  Form.value.validate((valid) => {
+    // 如果不合格，直接返回
+    if (!valid) return false;
+    // 如果合格，发送请求
+    axios.post('/login/',{
+      email: loginForm.email,
+      password: loginForm.password
+    }).then(res => {
+      showMessage(res)
+    })
+  });
+}
+
+
 </script>
 
 <style scoped>
