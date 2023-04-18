@@ -36,7 +36,7 @@
 </template>
   
 <script setup>
-import PasswordInput from "@/components/PasswordInput.vue";
+import PasswordInput from "@/pages/PasswordInput.vue";
 import { reactive, ref, toRef } from "vue";
 import axios from "axios";
 import { ElMessage } from "element-plus";

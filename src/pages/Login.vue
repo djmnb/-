@@ -22,9 +22,12 @@
 </template>
 
 <script setup>
-import PasswordInput from "@/components/PasswordInput.vue";
+import PasswordInput from "@/pages/PasswordInput.vue";
 import { reactive, ref, getCurrentInstance } from "vue";
 import axios from "axios";
+import { useRouter } from "vue-router";
+
+
 
 
 let loginForm = reactive({
@@ -32,21 +35,23 @@ let loginForm = reactive({
   password: "",
 })
 
-// 拿到组件实例对象
+const router = useRouter();
 const Form = ref(null)
-
-// 提交表单
 const submitForm = () => {
-  // 验证数据是否合格
+ 
   Form.value.validate((valid) => {
-    // 如果不合格，直接返回
+    
     if (!valid) return false;
-    // 如果合格，发送请求
-    axios.post('/login/',{
+    
+    axios.post('/user/login/',{
       email: loginForm.email,
       password: loginForm.password
-    }).then(res => {
-      showMessage(res)
+    }).then(data => {
+      showMessage(data)
+      if (data.code === 200) {
+        router.replace({ path: '/index' })
+      }
+
     })
   });
 }

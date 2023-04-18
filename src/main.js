@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from "./router/index"
+import router from "./router/index.js"
 import store from './store'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
@@ -9,12 +9,18 @@ import axios from "axios";
 import { ElMessage } from 'element-plus'
 
 
+
+
 // axios的全局配置
 axios.defaults.baseURL = "http://localhost:8080/api";  // 本地开发环境,代理服务器地址
 axios.defaults.withCredentials = true;  // 允许跨域携带cookie
 
 // axios响应拦截器直接拿到数据
 axios.interceptors.response.use(res => {
+
+    if (res.data.code == 400) {
+        router.push("/login");
+    }
     return res.data;
 }, err => {
     console.log(err);
@@ -37,24 +43,11 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 
 
-window.code = {
-    USER_NOTFOUND: 1,       //用户没有注册
-    PASSWORD_ERROR: 2,      // 密码错误
-    IS_OK: 3,               // 成功
-    NOT_LOGIN: 4,           // 没有登录,没有权限访问页面
-    USER_EXIST: 5,          // 用户已经存在
-    PASSWORD_NOT_MATCH: 6,  // 密码不一致
-    CODE_ERROR: 7,          // 验证码不正确
-    TOO_FREQUENT: 8,        // 请求太频繁
 
-    CODE_REGISTER: "register",
-    CODE_CHANGE_PASSWORD: "change_password"
-}
-
-window.showMessage = function ({code,info}) {
-    if (code >= 400 && code < 600) {
+window.showMessage = function ({code,info},onlyerror=false) {
+    if (code >= 400 && code < 600 ) {
         ElMessage.error(info)
-    } else if (code < 300) {
+    } else if (code < 300 && !onlyerror) {
         ElMessage.success(info)
     }      
 }

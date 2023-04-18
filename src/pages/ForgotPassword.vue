@@ -1,5 +1,5 @@
 <template>
-  <div class="forgot-password-container">
+  <div class="container">
     <h2>忘记密码</h2>
     <el-form
       ref="forgotPasswordForm"
@@ -26,7 +26,8 @@
           placeholder="请输入验证码"
         >
           <template #append>
-            <el-button type="primary">发送</el-button>
+            <el-button type="primary" @click="getCode" :disabled="disabled">{{ btnText }}
+            </el-button>
           </template>
         </el-input>
       </el-form-item>
@@ -39,41 +40,70 @@
   </div>
 </template>
   
-  <script>
-import PasswordInput from "@/components/PasswordInput.vue";
+  <script setup>
+import PasswordInput from "@/pages/PasswordInput.vue";
+import { reactive, ref } from "vue";
 
-export default {
-  components: {
-    PasswordInput,
-  },
-  data() {
-    return {
-      forgotPasswordForm: {
-        email: "",
-        password: "",
-        confirmPassword: "",
-        verificationCode: "",
-      },
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          console.log("重置密码成功！");
-          // 这里添加实际的重置密码逻辑
-        } else {
-          console.log("重置密码失败！");
-          return false;
-        }
-      });
-    },
-  },
+
+
+
+
+let forgotPasswordForm = reactive({
+  email: "",
+  password: "",
+  confirmPassword: "",
+  verificationCode: "",
+});
+
+const submitForm = (formName) => {
+  const form = ref(formName);
+  form.value.validate((valid) => {
+    if (valid) {
+      console.log("重置密码成功！");
+      // 这里添加实际的重置密码逻辑
+    } else {
+      console.log("重置密码失败！");
+      return false;
+    }
+  });
 };
+
+let disabled = ref(false);
+function getCode() {
+  disabled.value = true;
+  let nums = 60;
+  let timer = setInterval(() => {
+    if (nums > 0) {
+      nums--;
+      btnText.value = nums + "s";
+    } else {
+      clearInterval(timer);
+      btnText.value = "发送";
+      disabled.value = false;
+    }
+  }, 1000);
+  axios
+    .post("/sendcode/", {
+      email: registerForm.email,
+      codeType: 100,
+    })
+    .then((data) => {
+
+      console.log(data);
+      showMessage(data);
+
+      if (data.code >= 400) {
+        clearInterval(timer);
+        btnText.value = "发送";
+        disabled.value = false;
+      }
+    });
+}
+
 </script>
   
   <style scoped>
-.forgot-password-container {
+.container {
   max-width: 400px;
   margin: 0 auto;
   padding: 2rem;

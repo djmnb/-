@@ -32,7 +32,10 @@ npm install axios
 ```
 npm install http-proxy-middleware --save
 ```
-
+#### 验证cookie是否还有效
+```
+npm install js-cookie
+```
 ### 后端
 
 #### 邮箱
@@ -50,6 +53,8 @@ pip install captcha
 ```
 pip install django-cors-headers
 ```
+
+
 
 
 

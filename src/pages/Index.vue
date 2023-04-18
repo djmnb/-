@@ -1,0 +1,69 @@
+<template>
+  <el-container class="container">
+    <el-header class="header">
+      <h1 class="headtitle">搜题系统</h1>
+    </el-header>
+    <el-container class="maincontainer">
+      <el-aside class="aside" width="150px">
+        <el-menu
+          default-active="/index/search"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          router
+        >
+          <el-menu-item index="/index">搜索题目</el-menu-item>
+          <el-menu-item index="/index/uploadquestion">上传题目</el-menu-item>
+          <el-menu-item index="/index/chat">chatgpt问答</el-menu-item>
+          <el-menu-item index="/index/history">历史记录</el-menu-item>
+        </el-menu>
+      </el-aside>
+      <el-main v-loading="searchisLoading" element-loading-background="rgba(240, 240, 240, 0.5)">
+        <router-view v-slot="{ Component}">
+          <keep-alive>
+            <component :is="Component"></component>
+          </keep-alive>
+         
+        </router-view>
+    
+      </el-main>
+    </el-container>
+  </el-container>
+</template>
+
+
+<script setup>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+
+let store = useStore();
+let searchisLoading = computed(() => {
+  return store.state.searchisLoading;
+});
+
+</script>
+
+<style scoped>
+.container {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header{
+  height: 15%;
+}
+.headtitle {
+  text-align: center;
+  font-weight: 900;
+  font-size: 40px;
+}
+
+/* .maincontainer {
+  height: 85%;
+} */
+.aside {
+  background-color: #545c64;
+}
+</style>
+
