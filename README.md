@@ -28,14 +28,7 @@ npm install vuex@next
 ```
 npm install axios
 ```
-#### 前端解决跨域问题
-```
-npm install http-proxy-middleware --save
-```
-#### 验证cookie是否还有效
-```
-npm install js-cookie
-```
+
 ### 后端
 
 #### 邮箱
@@ -43,16 +36,12 @@ npm install js-cookie
  pip install django-smtp-ssl
 ```
 
-#### 验证码转图片
+#### 选题算法库
+```
+pip install jieba scikit-learn numpy
+```
 
-```
-pip install captcha
-```
 
-#### 后端解决跨域问题
-```
-pip install django-cors-headers
-```
 
 
 

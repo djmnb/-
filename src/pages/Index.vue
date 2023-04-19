@@ -15,18 +15,26 @@
         >
           <el-menu-item index="/index">搜索题目</el-menu-item>
           <el-menu-item index="/index/uploadquestion">上传题目</el-menu-item>
+          <el-menu-item index="/index/myquestion">我的题目</el-menu-item>
           <el-menu-item index="/index/chat">chatgpt问答</el-menu-item>
-          <el-menu-item index="/index/history">历史记录</el-menu-item>
+          <el-menu-item index="/index/searchhistory">搜索记录</el-menu-item>
+          <el-menu-item index="/index/allquestion">所有题目</el-menu-item>
         </el-menu>
       </el-aside>
-      <el-main v-loading="searchisLoading" element-loading-background="rgba(240, 240, 240, 0.5)">
-        <router-view v-slot="{ Component}">
+      <el-main v-loading="isLoading" element-loading-background="rgba(240, 240, 240, 0.5)">
+        <!-- <router-view v-slot="{ Component}" v-if="!$route.meta.withinIndex">
           <keep-alive>
             <component :is="Component"></component>
           </keep-alive>
          
         </router-view>
-    
+        <NotFound v-else /> -->
+
+        <router-view v-slot="{ Component}">
+          <keep-alive>
+            <component :is="Component"></component>
+          </keep-alive>
+        </router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -36,10 +44,11 @@
 <script setup>
 import { useStore } from 'vuex';
 import { computed } from 'vue';
+import NotFound from './NotFound.vue';
 
 let store = useStore();
-let searchisLoading = computed(() => {
-  return store.state.searchisLoading;
+let isLoading = computed(() => {
+  return store.state.isLoading;
 });
 
 </script>
@@ -47,7 +56,7 @@ let searchisLoading = computed(() => {
 <style scoped>
 .container {
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .header{

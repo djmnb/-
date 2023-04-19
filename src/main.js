@@ -24,6 +24,7 @@ axios.interceptors.response.use(res => {
     return res.data;
 }, err => {
     console.log(err);
+    showMessage({code:500,info:err+"\n"+err.response.data},true)
     return Promise.reject(err);
 })
 

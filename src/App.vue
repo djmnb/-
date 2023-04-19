@@ -1,8 +1,12 @@
 <template>
+  <!-- <router-view v-if="!$route.meta.withinApp"></router-view>
+  <not-found v-else></not-found> -->
+
   <router-view></router-view>
 </template>
 
 <script setup>
+import NotFound from "./pages/NotFound";
 </script>
 
 <style>

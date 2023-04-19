@@ -8,6 +8,7 @@
         @paste="handlePaste"
         placeholder="输入文字或粘贴图片"
         v-loading="isloding"
+        @keydown.enter.prevent="search"
       ></div>
     </el-col>
 
@@ -16,7 +17,7 @@
     </el-col>
   </el-row>
   <div class="result">
-    <show-result :questions="questions" :searchText="searchText"></show-result>
+    <show-search-result :questions="questions" :searchText="searchText"/>
   </div>
   
 </template>
@@ -38,9 +39,11 @@ import {
   onUnmounted,
   computed,
 } from "vue";
-import { Search } from "@element-plus/icons-vue";
-import ShowResult from "@/components/ShowResult.vue";
-import { mapState, useStore } from "vuex";
+
+import { useStore } from "vuex";
+import ShowSearchResult from "@/components/ShowSearchResult.vue";
+import {Search} from  '@element-plus/icons-vue'
+
 
 let searchText = ref("");
 let isloding = ref(false);
@@ -85,7 +88,7 @@ async function convertImageToBase64(blob) {
 }
 
 let questions = computed(() => {
-  return store.state.questions;
+  return store.state.searchQuestions;
 });
 const store = useStore();
 // 发送搜索请求
@@ -118,6 +121,7 @@ function search() {
   outline: none;
   resize: vertical;
   overflow: hidden;
+  line-height: 40px;
 }
 
 .input-box:focus {

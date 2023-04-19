@@ -1,24 +1,18 @@
 <template>
-  <div class="register-container">
-    <h2>注册</h2>
-    <el-form ref="Form" :model="registerForm" label-width="100px">
+  <div class="container">
+    <h2>{{ title }}</h2>
+    <el-form ref="Form" :model="data" label-width="100px">
       <el-form-item label="邮箱" prop="email">
-        <el-input
-          v-model="registerForm.email"
-          placeholder="请输入邮箱"
-        ></el-input>
+        <el-input v-model="data.email" placeholder="请输入邮箱"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <password-input v-model="registerForm.password"></password-input>
+      <el-form-item :label="label" prop="password">
+        <password-input v-model="data.password"></password-input>
       </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPassword">
-        <password-input v-model="registerForm.confirmPassword"></password-input>
+      <el-form-item :label="'确认' + label" prop="confirmPassword">
+        <password-input v-model="data.confirmPassword"></password-input>
       </el-form-item>
       <el-form-item label="验证码" prop="verificationCode">
-        <el-input
-          v-model="registerForm.verificationCode"
-          placeholder="请输入验证码"
-        >
+        <el-input v-model="data.verificationCode" placeholder="请输入验证码">
           <template #append>
             <el-button type="primary" @click="getCode" :disabled="disabled">{{
               btnText
@@ -27,21 +21,25 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm"
-          >注册</el-button
-        >
+        <el-button type="primary" @click="submitForm">{{
+          sendBtnText
+        }}</el-button>
       </el-form-item>
     </el-form>
   </div>
 </template>
-  
-<script setup>
-import PasswordInput from "@/pages/PasswordInput.vue";
+    
+  <script setup>
+import PasswordInput from "@/pages/user/PasswordInput.vue";
 import { reactive, ref, toRef } from "vue";
 import axios from "axios";
-import { ElMessage } from "element-plus";
+import router from "@/router";
 
-let registerForm = reactive({
+
+
+let props = defineProps(["title", "label", "sendBtnText", "codeType", "url"]);
+
+let data = reactive({
   email: "",
   password: "",
   confirmPassword: "",
@@ -54,14 +52,17 @@ function submitForm($event) {
   Form.value.validate((valid) => {
     if (valid) {
       axios
-        .post("/register/", {
-          email: registerForm.email,
-          password: registerForm.password,
-          confirmPassword: registerForm.confirmPassword,
-          verificationCode: registerForm.verificationCode,
+        .post(props.url, {
+          email: data.email,
+          password: data.password,
+          confirmPassword: data.confirmPassword,
+          verificationCode: data.verificationCode,
         })
-        .then((res) => {
-          console.log(res);
+        .then((data) => {
+          showMessage(data)
+          if (data.code === 200) {
+            router.replace({ path: "/index" });
+          }
         });
       return true;
     } else {
@@ -86,12 +87,11 @@ function getCode() {
     }
   }, 1000);
   axios
-    .post("/sendcode/", {
-      email: registerForm.email,
-      codeType: 100,
+    .post("/user/sendcode/", {
+      email: data.email,
+      codeType: props.codeType,
     })
     .then((data) => {
-
       console.log(data);
       showMessage(data);
 
@@ -103,9 +103,9 @@ function getCode() {
     });
 }
 </script>
-  
-  <style scoped>
-.register-container {
+    
+<style scoped>
+.container {
   max-width: 400px;
   margin: 0 auto;
   padding: 2rem;
@@ -118,5 +118,6 @@ h2 {
   margin-bottom: 1.5rem;
 }
 </style>
+    
   
-
+  

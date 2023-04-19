@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import PasswordInput from "@/pages/PasswordInput.vue";
+import PasswordInput from "@/pages/user/PasswordInput.vue";
 import { reactive, ref, getCurrentInstance } from "vue";
 import axios from "axios";
 import { useRouter } from "vue-router";
