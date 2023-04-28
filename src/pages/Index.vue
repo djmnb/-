@@ -13,7 +13,7 @@
           active-text-color="#ffd04b"
           router
         >
-          <el-menu-item index="/index">搜索题目</el-menu-item>
+          <el-menu-item index="/index/search">搜索题目</el-menu-item>
           <el-menu-item index="/index/uploadquestion">上传题目</el-menu-item>
           <el-menu-item index="/index/myquestion">我的题目</el-menu-item>
           <el-menu-item index="/index/chat">chatgpt问答</el-menu-item>
@@ -30,7 +30,7 @@
         </router-view>
         <NotFound v-else /> -->
 
-        <router-view v-slot="{ Component}">
+        <router-view v-slot="{Component}">
           <keep-alive>
             <component :is="Component"></component>
           </keep-alive>
@@ -44,7 +44,6 @@
 <script setup>
 import { useStore } from 'vuex';
 import { computed } from 'vue';
-import NotFound from './NotFound.vue';
 
 let store = useStore();
 let isLoading = computed(() => {

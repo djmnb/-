@@ -33,7 +33,8 @@ const routes = [
     {
         path: "/index", component: Index, name: "index",
         children: [
-            { path: "", component: Search, name: "search" },
+            { path: "", redirect: "/index/search",name:"search"},
+            { path: "search", component: Search, name: "search" },
             { path: "question/:id", component: Question, name: "question" },
             { path: 'uploadquestion', component: UploadQuestion, name: 'uploadquestion' },
             { path: 'myquestion', component: MyQuestion, name: 'myquestion' },
@@ -41,11 +42,11 @@ const routes = [
             { path: 'searchhistory', component: SearchHistory, name: 'searchhistory' },
             { path: 'myinfo', component: MyInfo, name: 'myinfo' },
             { path: 'allquestion', component: AllQuestion, name: 'allQuestion' },
-            { path: ":catchMatch(.*)", component: NotFound, props: { title: "hello" }, meta: { withinIndex: true } }
+            { path: ":catchMatch(.*)", component: NotFound}
         ]
     },
 
-    { path: "/:catchMatch(.*)", component: NotFound, props: { title: "hello2" }, meta: { withinApp: true } }
+    { path: "/:catchMatch(.*)", component: NotFound}
 
 
 ]

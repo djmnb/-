@@ -12,7 +12,7 @@ import { ElMessage } from 'element-plus'
 
 
 // axios的全局配置
-axios.defaults.baseURL = "http://localhost:8080/api";  // 本地开发环境,代理服务器地址
+axios.defaults.baseURL = "/api";  // 本地开发环境,代理服务器地址
 axios.defaults.withCredentials = true;  // 允许跨域携带cookie
 
 // axios响应拦截器直接拿到数据

@@ -21,6 +21,8 @@ watchEffect(() => {
   });
 });
 
+
+
 let question = computed(() => {
   let data = store.state.singelQuestion;
   return data.length > 0 ? data[0] : {};
