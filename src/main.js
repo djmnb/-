@@ -15,6 +15,8 @@ import { ElMessage } from 'element-plus'
 axios.defaults.baseURL = "/api";  // 本地开发环境,代理服务器地址
 axios.defaults.withCredentials = true;  // 允许跨域携带cookie
 
+
+
 // axios响应拦截器直接拿到数据
 axios.interceptors.response.use(res => {
 
@@ -24,6 +26,13 @@ axios.interceptors.response.use(res => {
     return res.data;
 }, err => {
     console.log(err);
+    if (err.code == "ERR_NETWORK") {
+        showMessage({code:500,info:"网络错误"},true)
+        return Promise.reject(err);
+    } else if (err.code == "ERR_BAD_RESPONSE") {
+        showMessage({ code: 500, info: "代理错误或者服务器未开启" }, true)
+        return Promise.reject(err);
+    }
     showMessage({code:500,info:err+"\n"+err.response.data},true)
     return Promise.reject(err);
 })

@@ -9,6 +9,8 @@
         placeholder="输入文字或粘贴图片"
         v-loading="isloding"
         @keydown.enter.prevent="search"
+        @input="updateSearchText"
+        
       ></div>
     </el-col>
 
@@ -87,6 +89,10 @@ async function convertImageToBase64(blob) {
   });
 }
 
+function updateSearchText(event) {
+  searchText.value = inputBox.value.innerText;
+}
+
 let questions = computed(() => {
   return store.state.searchQuestions;
 });
@@ -94,10 +100,9 @@ const store = useStore();
 // 发送搜索请求
 function search() {
 
-  searchText.value = inputBox.value.innerText;
   const searchData = {
     searchText: searchText.value,
-    searchType,
+    searchType: searchType.value
   };
   store.dispatch("search", searchData);
 }

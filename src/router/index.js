@@ -1,7 +1,4 @@
 
-
-
-
 import MyQuestion from "../pages/question/MyQuestion.vue";
 import Chat from "../pages/chat/Chat.vue";
 import SearchHistory from "../pages/search/SearchHistory.vue";
@@ -15,6 +12,7 @@ import Common from "../pages/user/Common.vue";
 import NotFound from "../pages/NotFound.vue";
 import AllQuestion from "../pages/question/AllQuestion.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
+import CommonQuestion from "../pages/question/CommonQuestion.vue"
 
 
 
@@ -33,15 +31,15 @@ const routes = [
     {
         path: "/index", component: Index, name: "index",
         children: [
-            { path: "", redirect: "/index/search",name:"search"},
+            { path: "", redirect: "/index/search",name:"index"},
             { path: "search", component: Search, name: "search" },
             { path: "question/:id", component: Question, name: "question" },
             { path: 'uploadquestion', component: UploadQuestion, name: 'uploadquestion' },
-            { path: 'myquestion', component: MyQuestion, name: 'myquestion' },
+            { path: 'myquestion', component: CommonQuestion, name: 'myquestion',props:{methodName:"getQuestion","dataName":"myQuestions",getType:"MY_QUESTION",total:"myQuestionTotal",isLink:true} },
             { path: 'chat', component: Chat, name: 'chat' },
-            { path: 'searchhistory', component: SearchHistory, name: 'searchhistory' },
+            { path: 'searchhistory', component: CommonQuestion, name: 'searchhistory', props: { methodName: "getHistory", "dataName": "searchHistoryList", total: "historyTotal", isLink: false } },
             { path: 'myinfo', component: MyInfo, name: 'myinfo' },
-            { path: 'allquestion', component: AllQuestion, name: 'allQuestion' },
+            { path: 'allquestion', component: CommonQuestion, name: 'allQuestion',props:{methodName:"getQuestion","dataName":"allQuestions",getType:"ALL_QUESTION",total:"allQuestionTotal",isLink:true} },
             { path: ":catchMatch(.*)", component: NotFound}
         ]
     },

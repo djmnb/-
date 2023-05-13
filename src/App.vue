@@ -1,6 +1,4 @@
 <template>
-  <!-- <router-view v-if="!$route.meta.withinApp"></router-view>
-  <not-found v-else></not-found> -->
   <router-view></router-view>
 </template>
 
@@ -19,4 +17,6 @@
   margin: 0;
   padding: 0;
 }
+
+
 </style>
