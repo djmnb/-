@@ -1,5 +1,12 @@
 <template>
-  <router-view></router-view>
+  <Suspense>
+    <template #default>
+      <router-view></router-view>
+    </template>
+    <template #fallback>
+      <div>Loading...</div> <!-- 这里可以替换成你的加载状态组件 -->
+    </template>
+  </Suspense>
 </template>
 
 <script setup>

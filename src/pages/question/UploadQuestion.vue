@@ -46,15 +46,9 @@ const form = ref(null);
 const store = useStore();
 
 
-function onSubmit() {
-  form.value.validate((valid) => {
-    if (valid) {
-      store.dispatch("uploadQuestion", formModel);
-    } else {
-      console.log("error submit!!");
-      return false;
-    }
-  });
+async function onSubmit() {
+  await store.dispatch("uploadQuestion", formModel);
+  onReset();
 }
 
 function onReset() {

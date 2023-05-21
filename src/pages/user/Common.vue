@@ -34,8 +34,7 @@ import PasswordInput from "@/pages/user/PasswordInput.vue";
 import { reactive, ref, toRef } from "vue";
 import axios from "axios";
 import router from "@/router";
-
-
+import { ElMessage } from "element-plus";
 
 let props = defineProps(["title", "label", "sendBtnText", "codeType", "url"]);
 
@@ -49,26 +48,23 @@ let data = reactive({
 const Form = ref(null);
 
 function submitForm($event) {
-  Form.value.validate((valid) => {
-    if (valid) {
-      axios
-        .post(props.url, {
-          email: data.email,
-          password: data.password,
-          confirmPassword: data.confirmPassword,
-          verificationCode: data.verificationCode,
-        })
-        .then((data) => {
-          showMessage(data)
-          if (data.code === 200) {
-            router.replace({ path: "/index" });
-          }
-        });
-      return true;
-    } else {
-      return false;
-    }
-  });
+  if(data.confirmPassword !== data.password){
+    ElMessage.error('两次密码不一致')
+    return
+  }
+  axios
+    .post(props.url, {
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      verificationCode: data.verificationCode,
+    })
+    .then((data) => {
+      showMessage(data);
+      if (data.code === 200) {
+        router.replace({ path: "/index" });
+      }
+    });
 }
 
 let btnText = ref("发送");

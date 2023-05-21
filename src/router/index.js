@@ -5,7 +5,6 @@ import SearchHistory from "../pages/search/SearchHistory.vue";
 import MyInfo from "../pages/user/MyInfo.vue";
 import UploadQuestion from "../pages/question/UploadQuestion.vue";
 import Question from "../pages/question/Question.vue";
-import Index from "../pages/Index.vue";
 import Search from "../pages/search/Search.vue";
 import Login from "../pages/user/Login.vue";
 import Common from "../pages/user/Common.vue";
@@ -13,6 +12,10 @@ import NotFound from "../pages/NotFound.vue";
 import AllQuestion from "../pages/question/AllQuestion.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import CommonQuestion from "../pages/question/CommonQuestion.vue"
+
+
+
+const Index = () => import("../pages/Index.vue")
 
 
 
@@ -26,7 +29,7 @@ const routes = [
     },
     {
         path: "/forgot-password", component: Common, name: "forgot-password",
-        props: { title: "忘记密码", url: "/user/forgetpassword/", label: "新密码", sendBtnText: "重置密码", codeType: 102 }
+        props: { title: "忘记密码", url: "/user/changepassword/", label: "新密码", sendBtnText: "重置密码", codeType: 102 }
     },
     {
         path: "/index", component: Index, name: "index",

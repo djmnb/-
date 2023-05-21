@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import axios from "axios";
 
 
+
 const savedState = localStorage.getItem('vuexState');
 localStorage.removeItem('vuexState');
 const state = savedState ? JSON.parse(savedState) : {
@@ -14,6 +15,7 @@ const state = savedState ? JSON.parse(savedState) : {
     allQuestionTotal: 0,
     myQuestionTotal: 0,
     historyTotal: 0,
+    userInfo:null,
 
 };
 
@@ -48,8 +50,11 @@ const mutations = {
     },
     setHistoryTotal(state, historyTotal) {
         state.historyTotal = historyTotal
+    },
+    setUserInfo(state, userInfo) {
+        state.userInfo = userInfo
     }
-
+    
 
 
 }
@@ -126,10 +131,24 @@ const actions = {
                 console.log(err);
             });
         commit("setIsLoading", false);
+    },
+    async getUserInfo({ commit }, data) {
+        commit("setIsLoading", true);
+        await axios
+            .post("/user/getuserinfo/", data)
+            .then((res) => {
+                console.log(res);
+                commit("setUserInfo", res.data);
+                showMessage(res, true)
+            })
+            .catch((err) => {
+                console.log("actions.getUserInfo error")
+                console.log(err);
+            });
+        commit("setIsLoading", false);
     }
 
 }
-
 
 
 

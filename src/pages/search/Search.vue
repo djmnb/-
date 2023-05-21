@@ -10,18 +10,16 @@
         v-loading="isloding"
         @keydown.enter.prevent="search"
         @input="updateSearchText"
-        
       ></div>
     </el-col>
 
     <el-col :span="1">
-      <el-button :icon="Search" class="search-button" @click="search"/>
+      <el-button :icon="Search" class="search-button" @click="search" />
     </el-col>
   </el-row>
   <div class="result">
-    <show-search-result :questions="questions" :searchText="searchText"/>
+    <show-search-result :questions="questions" :searchText="searchText" :show="show"/>
   </div>
-  
 </template>
 
 
@@ -44,13 +42,14 @@ import {
 
 import { useStore } from "vuex";
 import ShowSearchResult from "@/components/ShowSearchResult.vue";
-import {Search} from  '@element-plus/icons-vue'
-
+import { Search } from "@element-plus/icons-vue";
 
 let searchText = ref("");
 let isloding = ref(false);
 let searchType = ref(103);
 const inputBox = ref(null);
+
+let show = ref(false);
 
 
 // 用户粘贴图片
@@ -72,6 +71,14 @@ async function handlePaste(event) {
           showMessage(res);
           searchText.value += res.data;
           inputBox.value.innerText = searchText.value;
+
+          // 将光标移动到末尾
+          const range = document.createRange();
+          range.selectNodeContents(inputBox.value);
+          range.collapse(false); // 将光标移动到末尾
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
         })
         .catch((err) => {
           isloding.value = false;
@@ -98,23 +105,27 @@ let questions = computed(() => {
 });
 const store = useStore();
 // 发送搜索请求
-function search() {
+async function search() {
+
 
   const searchData = {
     searchText: searchText.value,
-    searchType: searchType.value
+    questionNums:10
   };
-  store.dispatch("search", searchData);
+  await store.dispatch("search", searchData);
+  show.value = true;
 }
-
-
-
 </script>
     
 <style scoped>
 .search {
   align-items: center;
   justify-content: center;
+}
+
+.input-box:empty::before {
+  content: '输入文字或粘贴图片';
+  color: #bbb;
 }
 
 .input-box {

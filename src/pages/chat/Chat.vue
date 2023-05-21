@@ -1,18 +1,18 @@
 <template>
   <el-row class="box">
-    <div class="result">
-      <div
-        v-for="(message, index) in messages"
-        :key="index"
-        :class="message.type"
-      >
-        <div class="message-content">
-          {{ message.content }}
-        </div>
-      </div>
-    </div>
+    <chat-result ref="chatResult"></chat-result>
     <el-row class="search-box">
       <el-col :span="20">
+        <el-tooltip
+          class="select-box"
+          placement="top"
+          content="3.5模型有更快的响应速度,4模型有更高的准确度"
+        >
+          <select v-model="modelType">
+            <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+            <option value="gpt-4">gpt-4</option>
+          </select>
+        </el-tooltip>
         <div
           ref="inputBox"
           class="input-box"
@@ -25,8 +25,10 @@
         ></div>
       </el-col>
 
-      <el-col :span="1">
-        <el-button class="search-button" @click="search">发送</el-button>
+      <el-col :span="1" style="padding-top: 20px">
+        <el-button class="search-button" @click="search" v-loading="isloding1"
+          >发送</el-button
+        >
       </el-col>
     </el-row>
   </el-row>
@@ -40,17 +42,23 @@ export default {
 </script>
   <script setup>
 import axios from "axios";
-import { ref, computed, watch, watchEffect,nextTick } from "vue";
+import { ref, computed, watch, watchEffect, nextTick, onMounted } from "vue";
 
 import { useStore } from "vuex";
-import ShowSearchResult from "@/components/ShowSearchResult.vue";
-import { Search } from "@element-plus/icons-vue";
+import ChatResult from "@/components/ChatResult.vue";
 
 let searchText = ref("");
 let isloding = ref(false);
+let isloding1 = ref(false);
 let searchType = ref(104);
 const inputBox = ref(null);
-let messages = ref([]);
+let chatResult = ref(null);
+
+let modelType = ref("gpt-3.5-turbo");
+
+
+
+
 
 // 用户粘贴图片
 async function handlePaste(event) {
@@ -90,43 +98,23 @@ async function convertImageToBase64(blob) {
 
 const store = useStore();
 
-function updateSearchText(event) {
+function updateSearchText() {
   searchText.value = inputBox.value.innerText;
 }
 
 // 发送搜索请求
-function search() {
-  const searchData = {
+async function search() {
+  if (searchText.value.trim() == "") return;
+  if (isloding1.value == true) return;
+  isloding1.value = true;
+  let data = {
     searchText: searchText.value,
-    searchType: 104,
+    modelType: modelType.value,
   };
-
-  messages.value.push({
-    type: "user",
-    content: searchText.value.trim(),
-  });
   searchText.value = "";
   inputBox.value.innerText = "";
-  nextTick(() => {
-    // 获取滚动区域元素
-    const el = document.querySelector(".result");
-    // 设置滚动条到最下方
-    el.scrollTop = el.scrollHeight;
-  });
-  axios.post("search/", searchData).then((res) => {
-    console.log(res);
-    messages.value.push({
-      type: "server",
-      content: res.data,
-    });
-    nextTick(() => {
-      // 获取滚动区域元素
-      const el = document.querySelector(".result");
-      // 设置滚动条到最下方
-      el.scrollTop = el.scrollHeight;
-    });
-    showMessage(res, true);
-  });
+  await chatResult.value.search(data);
+  isloding1.value = false;
 }
 </script>
       
@@ -144,6 +132,11 @@ function search() {
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
+}
+.select-box {
+  position: absolute;
+  left: 6.3%;
+  top: -30%;
 }
 
 .input-box {
@@ -182,39 +175,5 @@ function search() {
 .search-button:focus {
   background-color: #4285f4;
   color: #ccc;
-}
-
-.result {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  overflow: auto;
-  height: 400px;
-  width: 80%;
-  margin: 0px, auto;
-}
-
-.result .user {
-  text-align: right;
-  margin-bottom: 10px;
-}
-
-.result .server {
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.message-content {
-  display: inline-block;
-  padding: 10px 20px;
-  border-radius: 20px;
-  color: #fff;
-}
-
-.result .user .message-content {
-  background-color: #4285f4;
-}
-
-.result .server .message-content {
-  background-color: #999;
 }
 </style>

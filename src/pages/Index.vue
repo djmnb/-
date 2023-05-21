@@ -19,6 +19,8 @@
           <el-menu-item index="/index/chat">在线问答</el-menu-item>
           <el-menu-item index="/index/searchhistory">搜索记录</el-menu-item>
           <el-menu-item index="/index/allquestion">所有题目</el-menu-item>
+          <el-menu-item index="/index/myinfo">个人中心</el-menu-item>
+          <!-- <el-menu-item @click="logout">退出系统</el-menu-item> -->
         </el-menu>
       </el-aside>
       <el-main
@@ -29,7 +31,7 @@
       
 
         <router-view v-slot="{ Component }">
-          <keep-alive>
+          <keep-alive exclude="Question">
             <component :is="Component" :key="$route.fullPath"></component>
           </keep-alive>
         </router-view>
@@ -42,11 +44,21 @@
 <script setup>
 import { useStore } from "vuex";
 import { computed } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+
 
 let store = useStore();
 let isLoading = computed(() => {
   return store.state.isLoading;
 });
+let router = useRouter()
+
+// 获取用户信息
+await store.dispatch("getUserInfo");
+
+
+
 </script>
 
 <style scoped>
@@ -63,8 +75,8 @@ let isLoading = computed(() => {
   font-weight: 900;
   font-size: 40px;
 }
-
-/* .maincontainer {
+/* 
+.maincontainer {
   height: 85%;
 } */
 
