@@ -198,6 +198,7 @@ async function changeQuestion() {
 }
 
 async function infoDelete() {
+
   if (currentType == 0) {
     await axios
       .post("/question/deletequestion/", {
@@ -215,6 +216,13 @@ async function infoDelete() {
         showMessage(res);
       });
   }
+
+
+  if (questions.value.length == 1 && currentPage.value != 1) {
+    currentPage.value--;
+  }
+ 
+
   await store.dispatch(props.methodName, {
     page: currentPage.value,
     pageSize: 10,
@@ -235,9 +243,6 @@ function onReset() {
 onDeactivated(() => {
   console.log(props.dataName + "失活了");
   isShow.value = false;
-
-
-
 });
 
 // 显示分页器
