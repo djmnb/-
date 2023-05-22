@@ -65,7 +65,7 @@ await store.dispatch("getUserInfo");
 .container {
   height: 100vh;
   overflow: auto;
-  background: url("https://th.bing.com/th?id=OIP.VPX2HZTUr5eckwJGBtxEegHaDe&w=350&h=164&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2")
+  background: url("~@/assets/bg.jfif")
     no-repeat center center fixed;
   background-size: cover;
 }
@@ -92,7 +92,7 @@ await store.dispatch("getUserInfo");
 
 .maincontainer {
   height: 85%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(229, 229, 229, 0.8);
   border-radius: 5px;
 }
 

@@ -125,14 +125,14 @@ async function search() {
 
 .input-box:empty::before {
   content: '输入文字或粘贴图片';
-  color: #bbb;
+  color:  #8B4513;
 }
 
 .input-box {
   height: 60px;
   padding: 10px;
   box-sizing: border-box;
-  border: 1px solid #ccc;
+  border: 1px solid  #8B4513;
   border-radius: 4px;
   outline: none;
   resize: vertical;
@@ -141,7 +141,7 @@ async function search() {
 }
 
 .input-box:focus {
-  border-color: #333;
+  border-color:  #8B4513;
 }
 
 .search-button {

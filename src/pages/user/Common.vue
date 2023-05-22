@@ -104,8 +104,7 @@ function getCode() {
 
 <style scoped>
 .app-container {
-  background: url("https://th.bing.com/th?id=OIP.VPX2HZTUr5eckwJGBtxEegHaDe&w=350&h=164&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2")
-    no-repeat center center fixed;
+  background: url("~@/assets/bg.jfif") no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

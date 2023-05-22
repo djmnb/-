@@ -176,4 +176,27 @@ async function search() {
   background-color: #4285f4;
   color: #ccc;
 }
+
+/*  ----------------------------  */
+
+.input-box {
+  /* ...其他样式保持不变... */
+  border: 1px solid #4285f4;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.input-box:focus {
+  border-color: #2a75f3;
+  box-shadow: 0 0 5px #2a75f3;
+}
+
+.search-button {
+  /* ...其他样式保持不变... */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.search-button:hover {
+  background-color: #2a75f3;
+  box-shadow: 0 0 10px #2a75f3;
+}
 </style>

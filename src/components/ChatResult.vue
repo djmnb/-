@@ -123,7 +123,7 @@ defineExpose({ search });
 
 <style scoped>
 .result {
-  border: 1px solid #ccc;
+  border: 2px solid #4285f4;
   border-radius: 4px;
   overflow-x: visible;
   height: 60vh;
@@ -172,4 +172,5 @@ defineExpose({ search });
 h4 {
   font-size: 5px;
 }
+
 </style>
