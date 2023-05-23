@@ -108,13 +108,13 @@ function changePassword() {
 
 <style scoped>
 .form {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
 }
 .box {
   margin-top: 20px;
   text-align: center;
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
 }
 </style>

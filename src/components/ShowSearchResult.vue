@@ -8,7 +8,7 @@
       justify="center"
       
     >
-      <el-col :span="16">
+      <el-col :span="16" class="question-container">
         <router-link
           :to="{
             name: 'question',
@@ -16,7 +16,7 @@
               id: question.id
             }
           }"
-          class="question-link"
+          class="question-link ellipsis"
         >
           <em
             v-for="(ch, index) in question.title"
@@ -68,8 +68,13 @@ function viewdetail(id) {
   margin-bottom: 10px;
 }
 
+.question-container {
+  display: flex;
+}
+
 .question-link {
   color: #333;
+  width: 100%;
 }
 
 .question-link:hover {
@@ -79,6 +84,13 @@ function viewdetail(id) {
 .match {
   color: red;
 }
+.ellipsis {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 
 .no-result {
   color:  #8B4513;
