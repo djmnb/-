@@ -15,11 +15,19 @@
     <el-menu-item index="/index/searchhistory">搜索记录</el-menu-item>
     <el-menu-item index="/index/allquestion">所有题目</el-menu-item>
     <el-menu-item index="/index/myinfo">个人中心</el-menu-item>
+    <el-menu-item index="/index/createquestion" v-if="userInfo.hasPermission">生成题库</el-menu-item>
     <!-- your el-menu-items here -->
   </el-menu>
 </template>
 
 <script setup>
+
+import { useStore } from "vuex";
+
+let store = useStore();
+let userInfo = store.state.userInfo;
+
+
 </script>
 
 <style>

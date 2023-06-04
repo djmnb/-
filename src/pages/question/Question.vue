@@ -14,11 +14,13 @@
 
       <template #header>
         <div  class="clearfix">
-        <span>题目详解</span>
+          <span>题目答案</span>
       </div>
       </template>
+
+      <v-md-preview class="text item" :text="question.content"  />
     
-      <div class="text item">{{ question.content }}</div>
+      <!-- <div class="text item"><v-md-preview :text="question.content" /></div> -->
     </el-card>
   </div>
 </template>
@@ -80,9 +82,7 @@ let question = computed(() => {
   content: "";
 }
 .text.item {
-  margin-top: 20px;
-  font-size: 18px;
-  line-height: 2;
+  margin-top: 5px;
   color: #606266;
 }
 .question-card {

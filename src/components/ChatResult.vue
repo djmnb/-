@@ -6,9 +6,10 @@
         :key="index"
         :class="message.role"
       >
-        <div class="message-content">
-          {{ message.content }}
-        </div>
+        <v-md-preview
+          class="message-content"
+          :text="message.content"
+        ></v-md-preview>
       </div>
     </div>
     <div class="result-op">
@@ -51,14 +52,6 @@ let contentNum = ref(4);
 let nowConsumTokens = ref(0);
 let allConsumTokens = ref(0);
 let allTokens = ref(0);
-
-// if (store.state.userInfo == null) {
-//   store.dispatch("getUserInfo");
-// }
-
-// watchEffect(() => {
-//   if(store.state.userInfo != null)allTokens.value = store.state.userInfo.tokens;
-// });
 
 allTokens.value = store.state.userInfo.tokens;
 
@@ -150,9 +143,10 @@ defineExpose({ search });
 
 .message-content {
   display: inline-block;
-  padding: 10px 20px;
+  padding: 10px;
   border-radius: 20px;
   color: #fff;
+  /* font-size: 10px; */
 }
 
 .result .user .message-content {
@@ -172,5 +166,4 @@ defineExpose({ search });
 h4 {
   font-size: 5px;
 }
-
 </style>

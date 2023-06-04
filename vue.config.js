@@ -12,6 +12,7 @@ module.exports = defineConfig({
           '^/api': ''  // 如果不写这个,会带着原来的请求路径一起带过去
         }
       }
+
     }
   }
 })

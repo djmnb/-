@@ -64,7 +64,7 @@ function submitForm($event) {
     .then((data) => {
       showMessage(data);
       if (data.code === 200) {
-        router.replace({ path: "/index" });
+        router.replace({ path: "/login" });
       }
     });
 }

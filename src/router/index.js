@@ -12,6 +12,7 @@ import NotFound from "../pages/NotFound.vue";
 import AllQuestion from "../pages/question/AllQuestion.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import CommonQuestion from "../pages/question/CommonQuestion.vue"
+import CreateQuestion from "../pages/question/CreateQuestion.vue"
 
 
 
@@ -37,6 +38,7 @@ const routes = [
             { path: "", redirect: "/index/search",name:"index"},
             { path: "search", component: Search, name: "search" },
             { path: "question/:id", component: Question, name: "question" },
+            { path: "createquestion", component: CreateQuestion, name: "createquestion" },
             { path: 'uploadquestion', component: UploadQuestion, name: 'uploadquestion' },
             { path: 'myquestion', component: CommonQuestion, name: 'myquestion',props:{methodName:"getQuestion","dataName":"myQuestions",getType:"MY_QUESTION",total:"myQuestionTotal",isLink:true} },
             { path: 'chat', component: Chat, name: 'chat' },
