@@ -164,6 +164,6 @@ defineExpose({ search });
   transform: translateX(100%);
 }
 h4 {
-  font-size: 5px;
+  font-size: 10px;
 }
 </style>

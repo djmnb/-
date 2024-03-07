@@ -20,7 +20,7 @@ module.exports = defineConfig({
     port: 8080,  // 修改为你想启动的端口
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:8000', // 修改一下这里变成代理服务器的地址
+        target: 'http://127.0.0.1:8000', // 修改一下这里变成后端服务器地址
         pathRewrite: {
           '^/api': ''  // 如果不写这个,会带着原来的请求路径一起带过去
         }
@@ -30,7 +30,12 @@ module.exports = defineConfig({
   }
 })
 ```
+### 安装依赖
 
+```shell
+npm install
+
+```
 ### 运行
 
 ```shell
