@@ -43,3 +43,11 @@ npm run serve # 运行项目
 npm run build # 构建项目 打包成静态资源
 ```
 
+## 展示
+
+### 登录界面
+
+![image-20240307235353094](img/READMEassets/image-20240307235353094.png)
+
+### 主界面
+
