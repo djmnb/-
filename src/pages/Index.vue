@@ -1,87 +1,127 @@
 <template>
   <el-container class="container">
     <el-header class="header">
-      <h1 class="headtitle">搜题系统</h1>
+      <div class="banner">
+        <el-button
+          class="drawer-button"
+          :icon="Menu"
+          @click="drawer = true"
+        ></el-button>
+        <h1 class="headtitle">搜题系统</h1>
+      </div>
     </el-header>
     <el-container class="maincontainer">
-      <el-aside class="aside" width="150px">
-        <el-menu
-          :default-active="$route.fullPath"
-          class="el-menu-vertical-demo"
-          background-color="#545c64"
-          text-color="#fff"
-          active-text-color="#ffd04b"
-          router
-        >
-          <el-menu-item index="/index/search">搜索题目</el-menu-item>
-          <el-menu-item index="/index/uploadquestion">上传题目</el-menu-item>
-          <el-menu-item index="/index/myquestion">我的题目</el-menu-item>
-          <el-menu-item index="/index/chat">在线问答</el-menu-item>
-          <el-menu-item index="/index/searchhistory">搜索记录</el-menu-item>
-          <el-menu-item index="/index/allquestion">所有题目</el-menu-item>
-          <el-menu-item index="/index/myinfo">个人中心</el-menu-item>
-          <!-- <el-menu-item @click="logout">退出系统</el-menu-item> -->
-        </el-menu>
+      <el-aside class="aside" v-if="!isMobile" width="150px">
+        <aside-menu></aside-menu>
       </el-aside>
       <el-main
         v-loading="isLoading"
         element-loading-background="rgba(240, 240, 240, 0.5)"
-        style="position: relative;"
+        style="position: relative"
       >
-      
-
         <router-view v-slot="{ Component }">
           <keep-alive exclude="Question">
             <component :is="Component" :key="$route.fullPath"></component>
           </keep-alive>
         </router-view>
+        <!-- your el-main contents here -->
       </el-main>
     </el-container>
+    <el-drawer
+      title="菜单"
+      v-model="drawer"
+      :with-header="false"
+      direction="ltr"
+      size="50%"
+    >
+      <aside-menu @select="drawer = false"></aside-menu>
+    </el-drawer>
   </el-container>
 </template>
 
-
 <script setup>
 import { useStore } from "vuex";
-import { computed } from "vue";
+import { computed, ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
-
+import AsideMenu from "@/components/AsideMenu.vue";
+import { Menu } from "@element-plus/icons-vue";
 
 let store = useStore();
 let isLoading = computed(() => {
   return store.state.isLoading;
 });
-let router = useRouter()
+let router = useRouter();
 
 // 获取用户信息
 await store.dispatch("getUserInfo");
 
+let drawer = ref(false);
+let isMobile = ref(window.innerWidth < 768);
 
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth < 768;
+};
 
+onMounted(() => {
+  window.addEventListener("resize", updateIsMobile);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateIsMobile);
+});
 </script>
 
 <style scoped>
 .container {
   height: 100vh;
   overflow: auto;
+  background: url("~@/assets/bg.jfif") no-repeat center center fixed;
+  background-size: cover;
 }
 
 .header {
   height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
-.headtitle {
+
+.banner {
+  background-color: rgba(0, 51, 102, 0.8);
+  padding: 20px;
+  border-radius: 25px;
   text-align: center;
+}
+
+.headtitle {
   font-weight: 900;
   font-size: 40px;
+  color: #ffd04b;
 }
-/* 
+
+.drawer-button {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  .drawer-button {
+    display: block;
+  }
+}
+
 .maincontainer {
   height: 85%;
-} */
+  background-color: rgba(229, 229, 229, 0.8);
+  border-radius: 5px;
+}
 
 .aside {
-  background-color: #545c64;
+  background-color: #003366;
 }
 </style>
-

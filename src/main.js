@@ -7,8 +7,15 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import VMdPreview from '@kangc/v-md-editor/lib/preview';
+import '@kangc/v-md-editor/lib/style/preview.css';
+import githubTheme from '@kangc/v-md-editor/lib/theme/github.js';
+import '@kangc/v-md-editor/lib/theme/style/github.css';
+import hljs from 'highlight.js';
 
-
+VMdPreview.use(githubTheme, {
+  Hljs: hljs,
+});
 
 
 // axios的全局配置
@@ -43,6 +50,7 @@ const app = createApp(App)
     .use(router)
     .use(store)
     .use(ElementPlus)
+    .use(VMdPreview)
 
 // 将axios挂载到vue的原型上,这样每个vue实例都可以使用this.$axios来访问axios
 // app.config.globalProperties.$axios = axios;

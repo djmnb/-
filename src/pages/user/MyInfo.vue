@@ -4,9 +4,9 @@
       <el-input :value="user.email" disabled></el-input>
     </el-form-item>
 
-    <el-form-item label="身份">
+    <el-form-item label="生成题库权限">
       <el-input
-        :value="user.isAdmin ? '管理员' : '普通用户'"
+        :value="user.hasPermission ? '有' : '无'"
         disabled
       ></el-input>
     </el-form-item>
@@ -108,13 +108,13 @@ function changePassword() {
 
 <style scoped>
 .form {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
 }
 .box {
   margin-top: 20px;
   text-align: center;
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
 }
 </style>

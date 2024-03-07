@@ -1,66 +1,71 @@
 <template>
   <el-row v-for="question in questions" :key="question.id" class="search">
-    <el-col :span="22" class="title">
-      <div v-if="isLink">
-        <router-link
-          :to="{
-            name: 'question',
-            params: {
-              id: question.id,
-            },
-          }"
-          class="link"
-        >
-          {{ question.title }}
-        </router-link>
+    <el-col :span="22" class="title d-flex align-items-center">
+      <div class="flex-grow-1 ellipsis">
+        <div v-if="isLink">
+          <router-link
+            :to="{
+              name: 'question',
+              params: {
+                id: question.id,
+              },
+            }"
+            class="link ellipsis"
+          >
+            {{ question.title }}
+          </router-link>
+        </div>
 
-        <div class="op" v-if="getType == 'MY_QUESTION'">
-          <el-button
-            type="primary"
-            @click="
-              () => {
-                dialogTableVisible = true;
-                currentQuestion = question;
-                formModel = reactive(
-                  JSON.parse(JSON.stringify(currentQuestion))
-                );
-              }
-            "
-            >编辑</el-button
-          >
-          <el-button
-            type="danger"
-            @click="
-              () => {
-                centerDialogVisible = true;
-                currentQuestion = question;
-                currentType = 0;
-              }
-            "
-            >删除</el-button
-          >
+        <div v-else>
+          <div class="ellipsis">{{ question.title }}</div>
         </div>
       </div>
 
-      <div v-else>
-        <span>{{ question.title }}</span>
-        <div class="op">
-          <el-button
-            type="danger"
-            @click="
-              () => {
-                centerDialogVisible = true;
-                currentQuestion = question;
-                currentType = 1;
-              }
-            "
-            >删除</el-button
-          >
-        </div>
+      <div class="op" v-if="getType == 'MY_QUESTION'">
+        <el-button
+          type="primary"
+          @click="
+            () => {
+              dialogTableVisible = true;
+              currentQuestion = question;
+              formModel = reactive(JSON.parse(JSON.stringify(currentQuestion)));
+            }
+          "
+        >
+          编辑
+        </el-button>
+
+        <el-button
+          type="danger"
+          @click="
+            () => {
+              centerDialogVisible = true;
+              currentQuestion = question;
+              currentType = 0;
+            }
+          "
+        >
+          删除
+        </el-button>
+      </div>
+
+      <div class="op" v-else-if="getType != 'ALL_QUESTION'">
+        <el-button
+          type="danger"
+          @click="
+            () => {
+              centerDialogVisible = true;
+              currentQuestion = question;
+              currentType = 1;
+            }
+          "
+        >
+          删除
+        </el-button>
       </div>
     </el-col>
   </el-row>
-
+  <!-- Rest of your component -->
   <teleport to="body">
     <el-pagination
       v-show="isShow"
@@ -121,8 +126,8 @@
     </el-form>
   </el-dialog>
 </template>
-  
-  <script setup>
+
+<script setup>
 import {
   watchEffect,
   ref,
@@ -215,6 +220,11 @@ async function infoDelete() {
         showMessage(res);
       });
   }
+
+  if (questions.value.length == 1 && currentPage.value != 1) {
+    currentPage.value--;
+  }
+
   await store.dispatch(props.methodName, {
     page: currentPage.value,
     pageSize: 10,
@@ -235,9 +245,6 @@ function onReset() {
 onDeactivated(() => {
   console.log(props.dataName + "失活了");
   isShow.value = false;
-
-
-
 });
 
 // 显示分页器
@@ -254,15 +261,15 @@ onActivated(() => {
 });
 </script>
   
-  <style scoped>
+
+<style scoped>
 .search {
   overflow: auto;
   justify-self: center;
 }
+
 .title {
   text-align: left;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   font-size: 16px;
   line-height: 3em;
   margin: 0 auto;
@@ -270,7 +277,9 @@ onActivated(() => {
 
 .link {
   color: #000;
-  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .link:hover {
@@ -285,6 +294,22 @@ onActivated(() => {
 }
 
 .op {
-  float: right;
+  white-space: nowrap;
+  margin-left: 10px;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
