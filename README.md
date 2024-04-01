@@ -1,7 +1,7 @@
 # 搜题系统前端
 
 ## 简介
-本项目是我课设(搜题系统)的前端部分,  使用vue3框架 elementUI 以及 vuex vue-router 和 axios
+本项目是我毕设(搜题系统)的前端部分,  使用vue3框架 elementUI 以及 vuex vue-router 和 axios
 
 ## 使用
 
